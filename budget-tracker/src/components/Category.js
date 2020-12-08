@@ -2,10 +2,13 @@ import React from 'react';
 import Item from './Item.js';
 
 function Category (props) {
-    console.log("GAE");
+    if(props.category.items.length == 0){
+        return (
+            <div></div>
+        )
+    }
     
     return (
-        
         <div id="budgetPanel" class="container bg-warning py-1 mt-4 rounded">
             <h3> {props.category.title} </h3>
 
@@ -21,7 +24,7 @@ function Category (props) {
     );
 } 
 
-function getTotalExpenses(items){
+export function getTotalExpenses(items){
     let totalExpense = 0;
 
     items.forEach(item => {

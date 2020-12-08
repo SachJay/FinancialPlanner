@@ -77,13 +77,18 @@ class App extends Component {
             console.log(this.taskInfo);*/
     }
 
-    render(){///>
+    render(){
       var categories = this.state.categories;
       //console.log("Keys: "+);
         var keys = Object.keys(categories);
-        
+        var totalExpenses = 0;
+
+        keys.map((categoryName) =>     
+          totalExpenses += getTotalExpensesApp(categories[categoryName].items)
+        )
+
         return (
-          <div id="budgetPanel" className="container bg-warning py-1 mt-4 rounded">
+          <div className="container bg-primary pt-1 pb-4 my-4 rounded">
             { 
                 keys.map((categoryName) =>
                   
@@ -91,10 +96,34 @@ class App extends Component {
                   <Category category={categories[categoryName]}/>
                 )
             }
+
+            <div class="container bg-warning py-1 mt-4 rounded">
+              <h3> Expense Summary </h3>
+
+              { 
+                keys.map((categoryName) =>
+                
+                 <p> {categories[categoryName].title}: {getTotalExpensesApp(categories[categoryName].items)} </p>
+                )
+              }
+
+              <p> Total Expenses: {totalExpenses}</p>
+
+            </div>
           </div>
         )
          
     } 
 } 
+
+function getTotalExpensesApp(items){
+  let totalExpense = 0;
+
+  items.forEach(item => {
+      totalExpense+=parseInt(item.amount);
+  });
+
+  return totalExpense;
+}
 
 export default App;
